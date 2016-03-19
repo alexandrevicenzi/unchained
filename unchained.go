@@ -34,6 +34,11 @@ func EncodePBKDF2SHA256(password string, salt string, iterations int) string {
 // Validate raw password using PBKDF2 SHA256 hasher.
 func VerifyPBKDF2SHA256(password string, encoded string) bool {
     s := strings.Split(encoded, "$")
+
+    if len(s) != 4 {
+        return false
+    }
+
     algorithm, iterations, salt := s[0], s[1], s[2]
 
     if (algorithm != "pbkdf2_sha256") {
@@ -61,6 +66,10 @@ func EncodePBKDF2SHA1(password string, salt string, iterations int) string {
 func VerifyPBKDF2SHA1(password string, encoded string) bool {
     s := strings.Split(encoded, "$")
     algorithm, iterations, salt := s[0], s[1], s[2]
+
+    if len(s) != 4 {
+        return false
+    }
 
     if (algorithm != "pbkdf2_sha1") {
         return false
