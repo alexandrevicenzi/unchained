@@ -1,10 +1,12 @@
-# Unchained
+# Unchained [![Build Status](https://travis-ci.org/alexandrevicenzi/unchained.svg?branch=master)](https://travis-ci.org/alexandrevicenzi/unchained)
 
 Django password hashers for Go
 
 ## About
 
 This project aims to implement [Django Hashers](https://github.com/django/django/blob/master/django/contrib/auth/hashers.py) in Go to perform user validation against Django legacy databases.
+
+If you're looking for a port of Django's auth application to Go you may would like to take a look in [djinn](https://godoc.org/github.com/aodin/djinn).
 
 ## Install
 
@@ -29,6 +31,24 @@ go get golang.org/x/crypto/pbkdf2
 | unsalted_sha1 | ✘ | ✘ |
 
 Others hashers are planned to be implemented.
+
+## Example
+
+```go
+package main
+
+import "github.com/alexandrevicenzi/unchained"
+
+func main() {
+    valid, err := unchained.CheckPassword("admin", "pbkdf2_sha256$24000$JMO9TJawIXB1$5iz40fwwc+QW6lZY+TuNciua3YVMV3GXdgkhXrcvWag=")
+
+    if (valid) {
+        // do something
+    } else {
+        // error
+    }
+}
+```
 
 ## Reference
 
