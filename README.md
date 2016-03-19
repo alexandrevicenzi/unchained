@@ -17,16 +17,16 @@ go get golang.org/x/crypto/pbkdf2
 
 | Hasher | Encode | Decode |
 |:-------|:------:|:------:|
-| argon2        | ✘ || ✘ |
-| bcrypt        | ✘ || ✘ |
-| bcrypt_sha256 | ✘ || ✘ |
-| crypt         | ✘ || ✘ |
-| md5           | ✘ || ✘ |
-| pbkdf2_sha1   | ✔ || ✔ |
-| pbkdf2_sha256 | ✔ || ✔ |
-| sha1          | ✘ || ✘ |
-| unsalted_md5  | ✘ || ✘ |
-| unsalted_sha1 | ✘ || ✘ |
+| argon2        | ✘ | ✘ |
+| bcrypt        | ✘ | ✘ |
+| bcrypt_sha256 | ✘ | ✘ |
+| crypt         | ✘ | ✘ |
+| md5           | ✘ | ✘ |
+| pbkdf2_sha1   | ✔ | ✔ |
+| pbkdf2_sha256 | ✔ | ✔ |
+| sha1          | ✘ | ✘ |
+| unsalted_md5  | ✘ | ✘ |
+| unsalted_sha1 | ✘ | ✘ |
 
 Others hashers are planned to be implemented.
 
