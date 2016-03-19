@@ -135,8 +135,8 @@ func CheckPassword(password string, encoded string) (bool, error) {
             "sha1",
             "unsalted_md5",
             "unsalted_sha1":
-            return false, fmt.Errorf("Hasher not implemented: %s", algorithm)
+            return false, fmt.Errorf("unchained: hasher not implemented %s", algorithm)
     }
 
-    return false, fmt.Errorf("Invaid hasher: %s", algorithm)
+    return false, fmt.Errorf("unchained: invaid hasher %s", algorithm)
 }
