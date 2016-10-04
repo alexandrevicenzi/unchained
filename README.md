@@ -1,4 +1,4 @@
-# Unchained [![Build Status](https://travis-ci.org/alexandrevicenzi/unchained.svg?branch=master)](https://travis-ci.org/alexandrevicenzi/unchained) [![GoDoc](https://godoc.org/github.com/alexandrevicenzi/unchained?status.svg)](http://godoc.org/github.com/alexandrevicenzi/unchained)
+# Unchained [![Build Status](https://travis-ci.org/alexandrevicenzi/unchained.svg?branch=master)](https://travis-ci.org/alexandrevicenzi/unchained) [![GoDoc](https://godoc.org/github.com/alexandrevicenzi/unchained?status.svg)](http://godoc.org/github.com/alexandrevicenzi/unchained) [![Go Report Card](https://goreportcard.com/badge/github.com/alexandrevicenzi/unchained)](https://goreportcard.com/report/github.com/alexandrevicenzi/unchained)
 
 Django password hashers for Go
 
