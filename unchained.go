@@ -24,14 +24,14 @@ func hashAlgorithm(encoded string) string {
 	return strings.Split(encoded, "$")[0]
 }
 
-// Encode raw password using PBKDF2 SHA256 hasher.
+// EncodePBKDF2SHA256 encode raw password using PBKDF2 SHA256 hasher.
 func EncodePBKDF2SHA256(password string, salt string, iterations int) string {
 	d := pbkdf2.Key([]byte(password), []byte(salt), iterations, sha256.Size, sha256.New)
 	hash := b64encode(d)
 	return fmt.Sprintf("pbkdf2_sha256$%d$%s$%s", iterations, salt, hash)
 }
 
-// Validate raw password using PBKDF2 SHA256 hasher.
+// VerifyPBKDF2SHA256 validate raw password using PBKDF2 SHA256 hasher.
 func VerifyPBKDF2SHA256(password string, encoded string) bool {
 	s := strings.Split(encoded, "$")
 
@@ -55,14 +55,14 @@ func VerifyPBKDF2SHA256(password string, encoded string) bool {
 	return compareDigest(newencoded, encoded)
 }
 
-// Encode raw password using PBKDF2 SHA1 hasher.
+// EncodePBKDF2SHA1 encode raw password using PBKDF2 SHA1 hasher.
 func EncodePBKDF2SHA1(password string, salt string, iterations int) string {
 	d := pbkdf2.Key([]byte(password), []byte(salt), iterations, sha1.Size, sha1.New)
 	hash := b64encode(d)
 	return fmt.Sprintf("pbkdf2_sha1$%d$%s$%s", iterations, salt, hash)
 }
 
-// Validate raw password using PBKDF2 SHA1 hasher.
+// VerifyPBKDF2SHA1 validate raw password using PBKDF2 SHA1 hasher.
 func VerifyPBKDF2SHA1(password string, encoded string) bool {
 	s := strings.Split(encoded, "$")
 
