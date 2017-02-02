@@ -3,11 +3,18 @@ package pbkdf2
 import (
 	"crypto/hmac"
 	"encoding/base64"
+	"errors"
 	"fmt"
 	"golang.org/x/crypto/pbkdf2"
 	"hash"
 	"strconv"
 	"strings"
+)
+
+var (
+	ErrHashComponentUnreadable = errors.New("unchained/pbkdf2: unreadable component in hashed password")
+	ErrHashComponentMismatch   = errors.New("unchained/pbkdf2: hashed password components mismatch")
+	ErrAlgorithmMismatch       = errors.New("unchained/pbkdf2: algorithm mismatch")
 )
 
 type PBKDF2Hasher struct {
@@ -17,34 +24,34 @@ type PBKDF2Hasher struct {
 }
 
 // Encode encode raw password using PBKDF2 hasher.
-func (h *PBKDF2Hasher) Encode(password string, salt string, iterations int) string {
+func (h *PBKDF2Hasher) Encode(password string, salt string, iterations int) (string, error) {
 	d := pbkdf2.Key([]byte(password), []byte(salt), iterations, h.size, h.digest)
 	hash := b64encode(d)
-	return fmt.Sprintf("%s$%d$%s$%s", h.algorithm, iterations, salt, hash)
+	return fmt.Sprintf("%s$%d$%s$%s", h.algorithm, iterations, salt, hash), nil
 }
 
 // Verify validate raw password using PBKDF2 hasher.
-func (h *PBKDF2Hasher) Verify(password string, encoded string) bool {
+func (h *PBKDF2Hasher) Verify(password string, encoded string) (bool, error) {
 	s := strings.Split(encoded, "$")
 
 	if len(s) != 4 {
-		return false
+		return false, ErrHashComponentMismatch
 	}
 
 	algorithm, iterations, salt := s[0], s[1], s[2]
 
 	if algorithm != h.algorithm {
-		return false
+		return false, ErrAlgorithmMismatch
 	}
 
 	i, err := strconv.Atoi(iterations)
 
 	if err != nil {
-		return false
+		return false, ErrHashComponentUnreadable
 	}
 
-	newencoded := h.Encode(password, salt, i)
-	return compareDigest(newencoded, encoded)
+	newencoded, _ := h.Encode(password, salt, i)
+	return compareDigest(newencoded, encoded), nil
 }
 
 func compareDigest(val1, val2 string) bool {

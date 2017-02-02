@@ -50,9 +50,9 @@ func CheckPassword(password string, encoded string) (bool, error) {
 
 	switch algorithm {
 	case "pbkdf2_sha256":
-		return pbkdf2.NewPBKDF2SHA256Hasher().Verify(password, encoded), nil
+		return pbkdf2.NewPBKDF2SHA256Hasher().Verify(password, encoded)
 	case "pbkdf2_sha1":
-		return pbkdf2.NewPBKDF2SHA1Hasher().Verify(password, encoded), nil
+		return pbkdf2.NewPBKDF2SHA1Hasher().Verify(password, encoded)
 	case
 		"argon2",
 		"bcrypt",
