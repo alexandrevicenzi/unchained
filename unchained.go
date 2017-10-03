@@ -53,9 +53,10 @@ func CheckPassword(password string, encoded string) (bool, error) {
 		return pbkdf2.NewPBKDF2SHA256Hasher().Verify(password, encoded)
 	case "pbkdf2_sha1":
 		return pbkdf2.NewPBKDF2SHA1Hasher().Verify(password, encoded)
+	case "bcrypt":
+		return bcrypt.NewBcrypt.Hasher().Verify(password, encoded)
 	case
 		"argon2",
-		"bcrypt",
 		"bcrypt_sha256",
 		"crypt",
 		"md5",
