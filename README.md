@@ -6,7 +6,7 @@ Django password hashers for Go
 
 This project aims to implement [Django Hashers](https://github.com/django/django/blob/master/django/contrib/auth/hashers.py) in Go to perform user validation against Django legacy databases.
 
-If you're looking for a port of Django's auth application to Go you may would like to take a look in [djinn](https://godoc.org/github.com/aodin/djinn).
+If you're looking for a port of Django's auth application check [djinn](https://godoc.org/github.com/aodin/djinn).
 
 ## Install
 
