@@ -52,5 +52,5 @@ func main() {
 
 ## Reference
 
-- [Password management in Django](https://docs.djangoproject.com/en/1.9/topics/auth/passwords/)
+- [Password management in Django](https://docs.djangoproject.com/en/dev/topics/auth/passwords/)
 - [Django Unchained](http://www.imdb.com/title/tt1853728/) :trollface:
