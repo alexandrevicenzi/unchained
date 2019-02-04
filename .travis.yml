@@ -3,20 +3,13 @@ language: go
 matrix:
   include:
     - go: '1.6'
-      env: GO111MODULE=off
     - go: '1.7'
-      env: GO111MODULE=off
     - go: '1.8'
-      env: GO111MODULE=off
     - go: '1.9'
-      env: GO111MODULE=off
     - go: '1.10'
-      env: GO111MODULE=off
     - go: '1.11'
       env: GO111MODULE=on
     - go: tip
       env: GO111MODULE=on
-before_install:
-  - if [[$GO111MODULE == "off"]]; then go get golang.org/x/crypto/pbkdf2 golang.org/x/crypto/bcrypt; fi;
 script:
   - go test -v ./...
