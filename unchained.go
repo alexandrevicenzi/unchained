@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/alexandrevicenzi/unchained/bcrypt"
 	"github.com/alexandrevicenzi/unchained/pbkdf2"
 )
 
@@ -49,14 +50,16 @@ func CheckPassword(password string, encoded string) (bool, error) {
 	algorithm := hashAlgorithm(encoded)
 
 	switch algorithm {
-	case "pbkdf2_sha256":
-		return pbkdf2.NewPBKDF2SHA256Hasher().Verify(password, encoded)
+	case "bcrypt":
+		return bcrypt.NewBCryptHasher().Verify(password, encoded)
+	case "bcrypt_sha256":
+		return bcrypt.NewBCryptSHA256Hasher().Verify(password, encoded)
 	case "pbkdf2_sha1":
 		return pbkdf2.NewPBKDF2SHA1Hasher().Verify(password, encoded)
+	case "pbkdf2_sha256":
+		return pbkdf2.NewPBKDF2SHA256Hasher().Verify(password, encoded)
 	case
 		"argon2",
-		"bcrypt",
-		"bcrypt_sha256",
 		"crypt",
 		"md5",
 		"sha1",

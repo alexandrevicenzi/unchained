@@ -9,5 +9,6 @@ go:
   - tip
 before_install:
   - go get golang.org/x/crypto/pbkdf2
+  - go get golang.org/x/crypto/bcrypt
 script:
   - go test -v ./...
