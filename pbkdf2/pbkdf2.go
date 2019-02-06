@@ -38,9 +38,9 @@ func (h *PBKDF2Hasher) Encode(password string, salt string, iterations int) (str
 		iterations = h.iterations
 	}
 
-	d := pbkdf2.Key([]byte(password), []byte(salt), iterations, h.size, h.digest)
-	hash := b64encode(d)
-	return fmt.Sprintf("%s$%d$%s$%s", h.algorithm, iterations, salt, hash), nil
+	hash := pbkdf2.Key([]byte(password), []byte(salt), iterations, h.size, h.digest)
+	b64Hash := base64.StdEncoding.EncodeToString(hash)
+	return fmt.Sprintf("%s$%d$%s$%s", h.algorithm, iterations, salt, b64Hash), nil
 }
 
 // Verify if a plain-text password matches the encoded digest.
@@ -63,16 +63,13 @@ func (h *PBKDF2Hasher) Verify(password string, encoded string) (bool, error) {
 		return false, ErrHashComponentUnreadable
 	}
 
-	newencoded, _ := h.Encode(password, salt, i)
-	return compareDigest(newencoded, encoded), nil
-}
+	newencoded, err := h.Encode(password, salt, i)
 
-func compareDigest(val1, val2 string) bool {
-	return hmac.Equal([]byte(val1), []byte(val2))
-}
+	if err != nil {
+		return false, err
+	}
 
-func b64encode(bytes []byte) string {
-	return base64.StdEncoding.EncodeToString(bytes)
+	return hmac.Equal([]byte(newencoded), []byte(encoded)), nil
 }
 
 // Alternate PBKDF2 hasher which uses SHA1, the default PRF
