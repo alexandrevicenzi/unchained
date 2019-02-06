@@ -6,6 +6,18 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestMakePasswordDefault(t *testing.T) {
+	hash, err := MakePassword("admin", "1TMOT0Rohg3g", "default")
+	assert.Nil(t, err)
+	assert.Equal(t, hash, "pbkdf2_sha256$180000$1TMOT0Rohg3g$yWmK6dJrGjnpIyllslJ9vlyiXP3WOGNQ74hjEofWJu4=")
+}
+
+func TestMakePasswordEmptySaltDefault(t *testing.T) {
+	hash, err := MakePassword("admin", "", "default")
+	assert.Nil(t, err)
+	assert.Equal(t, IdentifyHasher(hash), PBKDF2SHA256Hasher)
+}
+
 func TestCheckPasswordPBKDF2SHA1(t *testing.T) {
 	valid, err := CheckPassword("admin", "pbkdf2_sha1$120000$1TMOT0Rohg3g$zVJ4+gcRcano9Qks+kcsgKeRnVs=")
 	assert.Nil(t, err)
@@ -35,7 +47,17 @@ func TestIsPasswordUsableWithValidPassword(t *testing.T) {
 	assert.True(t, usable)
 }
 
-func TestIsPasswordUsableWithUnusablePassword(t *testing.T) {
+func TestIsPasswordUsableWithUnusablePassword1(t *testing.T) {
 	usable := IsPasswordUsable("!")
+	assert.False(t, usable)
+}
+
+func TestIsPasswordUsableWithUnusablePassword2(t *testing.T) {
+	usable := IsPasswordUsable("!password")
+	assert.False(t, usable)
+}
+
+func TestIsPasswordUsableWithEmptyPassword(t *testing.T) {
+	usable := IsPasswordUsable("")
 	assert.False(t, usable)
 }

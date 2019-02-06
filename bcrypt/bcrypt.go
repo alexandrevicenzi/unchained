@@ -22,7 +22,7 @@ type BCryptHasher struct {
 	cost      int
 }
 
-// Encode encode raw password using BCrypt hasher.
+// Encode turns a plain-text password into a hash.
 func (h *BCryptHasher) Encode(password string) (string, error) {
 	if h.digest != nil {
 		d := h.digest()
@@ -39,7 +39,7 @@ func (h *BCryptHasher) Encode(password string) (string, error) {
 	return fmt.Sprintf("%s$%s", h.algorithm, string(bytes)), nil
 }
 
-// Verify validate raw password using BCrypt hasher.
+// Verify if a plain-text password matches the encoded digest.
 func (h *BCryptHasher) Verify(password string, encoded string) (bool, error) {
 	s := strings.SplitN(encoded, "$", 2)
 
@@ -63,6 +63,10 @@ func (h *BCryptHasher) Verify(password string, encoded string) (bool, error) {
 	return err == nil, nil
 }
 
+// Secure password hashing using the bcrypt algorithm.
+//
+// This hasher does not first hash the password which means it is subject to
+// bcrypt's 72 bytes password truncation.
 func NewBCryptHasher() *BCryptHasher {
 	return &BCryptHasher{
 		algorithm: "bcrypt",
@@ -71,6 +75,9 @@ func NewBCryptHasher() *BCryptHasher {
 	}
 }
 
+// Secure password hashing using the bcrypt algorithm.
+//
+// This hasher first hash the password with SHA-256.
 func NewBCryptSHA256Hasher() *BCryptHasher {
 	return &BCryptHasher{
 		algorithm: "bcrypt_sha256",

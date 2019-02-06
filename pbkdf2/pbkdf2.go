@@ -2,6 +2,8 @@ package pbkdf2
 
 import (
 	"crypto/hmac"
+	"crypto/sha1"
+	"crypto/sha256"
 	"encoding/base64"
 	"errors"
 	"fmt"
@@ -16,22 +18,32 @@ var (
 	ErrHashComponentUnreadable = errors.New("unchained/pbkdf2: unreadable component in hashed password")
 	ErrHashComponentMismatch   = errors.New("unchained/pbkdf2: hashed password components mismatch")
 	ErrAlgorithmMismatch       = errors.New("unchained/pbkdf2: algorithm mismatch")
+	ErrSaltContainsDollarSing  = errors.New("unchained/pbkdf2: salt contains dollar sign ($)")
 )
 
 type PBKDF2Hasher struct {
-	algorithm string
-	size      int
-	digest    func() hash.Hash
+	algorithm  string
+	iterations int
+	size       int
+	digest     func() hash.Hash
 }
 
-// Encode encode raw password using PBKDF2 hasher.
+// Encode turns a plain-text password into a hash.
 func (h *PBKDF2Hasher) Encode(password string, salt string, iterations int) (string, error) {
+	if strings.Contains(salt, "$") {
+		return "", ErrSaltContainsDollarSing
+	}
+
+	if iterations <= 0 {
+		iterations = h.iterations
+	}
+
 	d := pbkdf2.Key([]byte(password), []byte(salt), iterations, h.size, h.digest)
 	hash := b64encode(d)
 	return fmt.Sprintf("%s$%d$%s$%s", h.algorithm, iterations, salt, hash), nil
 }
 
-// Verify validate raw password using PBKDF2 hasher.
+// Verify if a plain-text password matches the encoded digest.
 func (h *PBKDF2Hasher) Verify(password string, encoded string) (bool, error) {
 	s := strings.Split(encoded, "$")
 
@@ -61,4 +73,31 @@ func compareDigest(val1, val2 string) bool {
 
 func b64encode(bytes []byte) string {
 	return base64.StdEncoding.EncodeToString(bytes)
+}
+
+// Alternate PBKDF2 hasher which uses SHA1, the default PRF
+// recommended by PKCS #5.
+//
+// This is compatible with other implementations of PBKDF2,
+// such as openssl's PKCS5_PBKDF2_HMAC_SHA1().
+func NewPBKDF2SHA1Hasher() *PBKDF2Hasher {
+	return &PBKDF2Hasher{
+		"pbkdf2_sha1",
+		180000,
+		sha1.Size,
+		sha1.New,
+	}
+}
+
+// Secure password hashing using the PBKDF2 algorithm.
+//
+// Configured to use PBKDF2 + HMAC + SHA256.
+// The result is a 64 byte binary string.
+func NewPBKDF2SHA256Hasher() *PBKDF2Hasher {
+	return &PBKDF2Hasher{
+		"pbkdf2_sha256",
+		180000,
+		sha256.Size,
+		sha256.New,
+	}
 }

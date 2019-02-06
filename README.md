@@ -18,22 +18,24 @@ go get github.com/alexandrevicenzi/unchained
 
 | Hasher | Encode | Decode | Dependencies |
 |:-------|:------:|:------:|:------------:|
-| argon2        | ✘ | ✘ |  |
-| bcrypt        | ✔ | ✔ | [golang.org/x/crypto/bcrypt](golang.org/x/crypto/bcrypt) |
-| bcrypt_sha256 | ✔ | ✔ | [golang.org/x/crypto/bcrypt](golang.org/x/crypto/bcrypt) |
-| crypt         | ✘ | ✘ |  |
-| md5           | ✘ | ✘ |  |
-| pbkdf2_sha1   | ✔ | ✔ | [golang.org/x/crypto/pbkdf2](golang.org/x/crypto/pbkdf2) |
-| pbkdf2_sha256 | ✔ | ✔ | [golang.org/x/crypto/pbkdf2](golang.org/x/crypto/pbkdf2) |
-| sha1          | ✘ | ✘ |  |
-| unsalted_md5  | ✘ | ✘ |  |
-| unsalted_sha1 | ✘ | ✘ |  |
-
-Others hashers are planned to be implemented.
+| Argon2        | ✘ | ✘ |  |
+| BCrypt        | ✔ | ✔ | [golang.org/x/crypto/bcrypt](golang.org/x/crypto/bcrypt) |
+| BCrypt SHA256 | ✔ | ✔ | [golang.org/x/crypto/bcrypt](golang.org/x/crypto/bcrypt) |
+| Crypt         | ✘ | ✘ |  |
+| MD5           | ✘ | ✘ |  |
+| PBKDF2        | ✔ | ✔ | [golang.org/x/crypto/pbkdf2](golang.org/x/crypto/pbkdf2) |
+| PBKDF2 SHA1   | ✔ | ✔ | [golang.org/x/crypto/pbkdf2](golang.org/x/crypto/pbkdf2) |
+| SHA1          | ✘ | ✘ |  |
+| Unsalted MD5  | ✘ | ✘ |  |
+| Unsalted SHA1 | ✘ | ✘ |  |
 
 ## Notes
 
-BCrypt hashers do not allow to set custom salt as in Django. If you encode the same password multiple times you will get different hashes.
+Crypt support is not planned because it's UNIX only.
+
+BCrypt hashers do not allow to set custom salt as in Django.
+If you encode the same password multiple times you will get different hashes.
+This limitation comes from [golang.org/x/crypto/bcrypt](golang.org/x/crypto/bcrypt) library.
 
 ## Example
 
@@ -52,6 +54,11 @@ func main() {
     }
 }
 ```
+
+## TODO
+
+- Argon2 support
+- Weak hashers support
 
 ## Reference
 
