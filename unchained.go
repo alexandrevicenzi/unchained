@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"strings"
 
+	"github.com/alexandrevicenzi/unchained/argon2"
 	"github.com/alexandrevicenzi/unchained/bcrypt"
 	"github.com/alexandrevicenzi/unchained/pbkdf2"
 )
@@ -90,6 +91,7 @@ func IsWeakHasher(hasher string) bool {
 func IsHasherImplemented(hasher string) bool {
 	switch hasher {
 	case
+		Argon2Hasher,
 		BCryptHasher,
 		BCryptSHA256Hasher,
 		PBKDF2SHA1Hasher,
@@ -145,6 +147,8 @@ func CheckPassword(password, encoded string) (bool, error) {
 	}
 
 	switch hasher {
+	case Argon2Hasher:
+		return argon2.NewArgon2Hasher().Verify(password, encoded)
 	case BCryptHasher:
 		return bcrypt.NewBCryptHasher().Verify(password, encoded)
 	case BCryptSHA256Hasher:
@@ -179,6 +183,8 @@ func MakePassword(password, salt, hasher string) (string, error) {
 	}
 
 	switch hasher {
+	case Argon2Hasher:
+		return argon2.NewArgon2Hasher().Encode(password, salt)
 	case BCryptHasher:
 		return bcrypt.NewBCryptHasher().Encode(password)
 	case BCryptSHA256Hasher:

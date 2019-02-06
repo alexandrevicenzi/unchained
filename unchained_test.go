@@ -18,6 +18,12 @@ func TestMakePasswordEmptySaltDefault(t *testing.T) {
 	assert.Equal(t, IdentifyHasher(hash), PBKDF2SHA256Hasher)
 }
 
+func TestCheckPasswordArgon2(t *testing.T) {
+	valid, err := CheckPassword("admin", "argon2$argon2i$v=19$m=512,t=2,p=2$NnFZNGxmQTE1bmFV$kPPGrqD6dnRllcQeksFN+w")
+	assert.Nil(t, err)
+	assert.True(t, valid)
+}
+
 func TestCheckPasswordPBKDF2SHA1(t *testing.T) {
 	valid, err := CheckPassword("admin", "pbkdf2_sha1$120000$1TMOT0Rohg3g$zVJ4+gcRcano9Qks+kcsgKeRnVs=")
 	assert.Nil(t, err)
