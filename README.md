@@ -5,7 +5,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/alexandrevicenzi/unchained)](https://goreportcard.com/report/github.com/alexandrevicenzi/unchained)
 
 [Django Password Hashers](https://docs.djangoproject.com/en/2.0/topics/auth/passwords/) library in Go to perform user validation against legacy databases.
-You can also used it as a standard password hasher for newer Go applications.
+You can also use it as a standard password hasher for newer Go applications.
 
 Unchained works with Go 1.6 and higher.
 
@@ -82,6 +82,7 @@ func main() {
 
 ## TODO
 
+- BCrypt salt support
 - Weak hashers support
 
 ## License
