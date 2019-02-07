@@ -34,7 +34,7 @@ go get github.com/alexandrevicenzi/unchained
 
 Crypt support is not planned because it's UNIX only.
 
-BCrypt hashers do not allow to set custom salt as in Django.
+BCrypt hasher does not allow to set custom salt as in Django.
 If you encode the same password multiple times you will get different hashes.
 This limitation comes from [golang.org/x/crypto/bcrypt](golang.org/x/crypto/bcrypt) library.
 
