@@ -11,6 +11,6 @@
 //
 //    <algorithm>$<iterations>$<salt>$<hash>
 //
-// Currently this library supports PBKDF2 and BCrypt algorithms.
+// Currently this library supports Argon2, BCrypt, and PBKDF2 algorithms.
 //
 package unchained
