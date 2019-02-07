@@ -10,6 +10,7 @@ import (
 	"golang.org/x/crypto/argon2"
 )
 
+// Errors returned by Argon2Hasher.
 var (
 	ErrHashComponentUnreadable = errors.New("unchained/argon2: unreadable component in hashed password")
 	ErrHashComponentMismatch   = errors.New("unchained/argon2: hashed password components mismatch")
@@ -17,29 +18,35 @@ var (
 	ErrIncompatibleVersion     = errors.New("unchained/argon2: incompatible version")
 )
 
+// Argon2Hasher implements Argon2i password hasher.
 type Argon2Hasher struct {
-	algorithm string
-	time      uint32
-	memory    uint32
-	threads   uint8
-	length    uint32
+	// Algorithm identifier.
+	Algorithm string
+	// Defines the amount of computation time, given in number of iterations.
+	Time uint32
+	// Defines the memory usage (KiB).
+	Memory uint32
+	// Defines the number of parallel threads.
+	Threads uint8
+	// Defines the length of the hash in bytes.
+	Length uint32
 }
 
 // Encode turns a plain-text password into a hash.
 func (h *Argon2Hasher) Encode(password string, salt string) (string, error) {
 	bSalt := []byte(salt)
-	hash := argon2.Key([]byte(password), bSalt, h.time, h.memory, h.threads, h.length)
+	hash := argon2.Key([]byte(password), bSalt, h.Time, h.Memory, h.Threads, h.Length)
 
 	b64Salt := base64.RawStdEncoding.EncodeToString(bSalt)
 	b64Hash := base64.RawStdEncoding.EncodeToString(hash)
 
 	s := fmt.Sprintf("%s$%s$v=%d$m=%d,t=%d,p=%d$%s$%s",
-		h.algorithm,
+		h.Algorithm,
 		"argon2i",
 		argon2.Version,
-		h.memory,
-		h.time,
-		h.threads,
+		h.Memory,
+		h.Time,
+		h.Threads,
 		b64Salt,
 		b64Hash,
 	)
@@ -57,7 +64,7 @@ func (h *Argon2Hasher) Verify(password string, encoded string) (bool, error) {
 
 	algorithm, method, version, params, salt, hash := s[0], s[1], s[2], s[3], s[4], s[5]
 
-	if algorithm != h.algorithm || method != "argon2i" {
+	if algorithm != h.Algorithm || method != "argon2i" {
 		return false, ErrAlgorithmMismatch
 	}
 
@@ -74,7 +81,7 @@ func (h *Argon2Hasher) Verify(password string, encoded string) (bool, error) {
 		return false, ErrIncompatibleVersion
 	}
 
-	_, err = fmt.Sscanf(params, "m=%d,t=%d,p=%d", &h.memory, &h.time, &h.threads)
+	_, err = fmt.Sscanf(params, "m=%d,t=%d,p=%d", &h.Memory, &h.Time, &h.Threads)
 
 	if err != nil {
 		return false, ErrHashComponentUnreadable
@@ -83,7 +90,7 @@ func (h *Argon2Hasher) Verify(password string, encoded string) (bool, error) {
 	bSalt, err := base64.RawStdEncoding.DecodeString(salt)
 	bHash, err := base64.RawStdEncoding.DecodeString(hash)
 
-	newHash := argon2.Key([]byte(password), bSalt, h.time, h.memory, h.threads, h.length)
+	newHash := argon2.Key([]byte(password), bSalt, h.Time, h.Memory, h.Threads, h.Length)
 
 	return subtle.ConstantTimeCompare(bHash, newHash) == 1, nil
 }
@@ -91,10 +98,10 @@ func (h *Argon2Hasher) Verify(password string, encoded string) (bool, error) {
 // NewArgon2Hasher secures password hashing using the argon2 algorithm.
 func NewArgon2Hasher() *Argon2Hasher {
 	return &Argon2Hasher{
-		algorithm: "argon2",
-		time:      2,
-		memory:    512,
-		threads:   2,
-		length:    16,
+		Algorithm: "argon2",
+		Time:      2,
+		Memory:    512,
+		Threads:   2,
+		Length:    16,
 	}
 }

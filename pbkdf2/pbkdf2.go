@@ -14,6 +14,7 @@ import (
 	"golang.org/x/crypto/pbkdf2"
 )
 
+// Errors returned by PBKDF2Hasher.
 var (
 	ErrHashComponentUnreadable = errors.New("unchained/pbkdf2: unreadable component in hashed password")
 	ErrHashComponentMismatch   = errors.New("unchained/pbkdf2: hashed password components mismatch")
@@ -21,11 +22,16 @@ var (
 	ErrSaltContainsDollarSing  = errors.New("unchained/pbkdf2: salt contains dollar sign ($)")
 )
 
+// PBKDF2Hasher implements PBKDF2 password hasher.
 type PBKDF2Hasher struct {
-	algorithm  string
-	iterations int
-	size       int
-	digest     func() hash.Hash
+	// Algorithm identifier.
+	Algorithm string
+	// Defines the number of rounds used to encode the password.
+	Iterations int
+	// Defines the length of the hash in bytes.
+	Size int
+	// Defines the hash function used to encode the password.
+	Digest func() hash.Hash
 }
 
 // Encode turns a plain-text password into a hash.
@@ -35,12 +41,12 @@ func (h *PBKDF2Hasher) Encode(password string, salt string, iterations int) (str
 	}
 
 	if iterations <= 0 {
-		iterations = h.iterations
+		iterations = h.Iterations
 	}
 
-	hash := pbkdf2.Key([]byte(password), []byte(salt), iterations, h.size, h.digest)
+	hash := pbkdf2.Key([]byte(password), []byte(salt), iterations, h.Size, h.Digest)
 	b64Hash := base64.StdEncoding.EncodeToString(hash)
-	return fmt.Sprintf("%s$%d$%s$%s", h.algorithm, iterations, salt, b64Hash), nil
+	return fmt.Sprintf("%s$%d$%s$%s", h.Algorithm, iterations, salt, b64Hash), nil
 }
 
 // Verify if a plain-text password matches the encoded digest.
@@ -53,7 +59,7 @@ func (h *PBKDF2Hasher) Verify(password string, encoded string) (bool, error) {
 
 	algorithm, iterations, salt := s[0], s[1], s[2]
 
-	if algorithm != h.algorithm {
+	if algorithm != h.Algorithm {
 		return false, ErrAlgorithmMismatch
 	}
 
@@ -81,10 +87,10 @@ func (h *PBKDF2Hasher) Verify(password string, encoded string) (bool, error) {
 // such as openssl's PKCS5_PBKDF2_HMAC_SHA1().
 func NewPBKDF2SHA1Hasher() *PBKDF2Hasher {
 	return &PBKDF2Hasher{
-		"pbkdf2_sha1",
-		180000,
-		sha1.Size,
-		sha1.New,
+		Algorithm:  "pbkdf2_sha1",
+		Iterations: 180000,
+		Size:       sha1.Size,
+		Digest:     sha1.New,
 	}
 }
 
@@ -94,9 +100,9 @@ func NewPBKDF2SHA1Hasher() *PBKDF2Hasher {
 // The result is a 64 byte binary string.
 func NewPBKDF2SHA256Hasher() *PBKDF2Hasher {
 	return &PBKDF2Hasher{
-		"pbkdf2_sha256",
-		180000,
-		sha256.Size,
-		sha256.New,
+		Algorithm:  "pbkdf2_sha256",
+		Iterations: 180000,
+		Size:       sha256.Size,
+		Digest:     sha256.New,
 	}
 }

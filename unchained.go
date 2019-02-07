@@ -10,10 +10,8 @@ import (
 	"github.com/alexandrevicenzi/unchained/pbkdf2"
 )
 
+// Django hasher identifiers.
 const (
-	UnusablePasswordPrefix       = "!"
-	UnusablePasswordSuffixLength = 40
-
 	Argon2Hasher       = "argon2"
 	BCryptHasher       = "bcrypt"
 	BCryptSHA256Hasher = "bcrypt_sha256"
@@ -24,8 +22,16 @@ const (
 	SHA1Hasher         = "sha1"
 	UnsaltedMD5Hasher  = "unsalted_md5"
 	UnsaltedSHA1Hasher = "unsalted_sha1"
+)
 
-	DefaultHasher   = PBKDF2SHA256Hasher
+const (
+	// The prefix used in unusable passwords.
+	UnusablePasswordPrefix = "!"
+	// The length of unusable passwords after the prefix.
+	UnusablePasswordSuffixLength = 40
+	// The default hasher used in Django.
+	DefaultHasher = PBKDF2SHA256Hasher
+	// The default salt size used in Django.
 	DefaultSaltSize = 12
 
 	allowedChars     = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
@@ -33,7 +39,9 @@ const (
 )
 
 var (
-	ErrInvalidHasher        = errors.New("unchained: invalid hasher")
+	// ErrInvalidHasher is returned if the hasher is invalid or unknown.
+	ErrInvalidHasher = errors.New("unchained: invalid hasher")
+	// ErrHasherNotImplemented is returned if the hasher is not implemented.
 	ErrHasherNotImplemented = errors.New("unchained: hasher not implemented")
 )
 
