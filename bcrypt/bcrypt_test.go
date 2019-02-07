@@ -8,7 +8,7 @@ import (
 )
 
 func TestBCryptEncode(t *testing.T) {
-	encoded, err := NewBCryptHasher().Encode("admin")
+	encoded, err := NewBCryptHasher().Encode("admin", "")
 	assert.Nil(t, err)
 	assert.True(t, strings.HasPrefix(encoded, "bcrypt$$2a$12$"))
 }
@@ -44,7 +44,7 @@ func TestBCryptVerifyInvalidPassword(t *testing.T) {
 }
 
 func TestBCryptSHA256Encode(t *testing.T) {
-	encoded, err := NewBCryptSHA256Hasher().Encode("admin")
+	encoded, err := NewBCryptSHA256Hasher().Encode("admin", "")
 	assert.Nil(t, err)
 	assert.True(t, strings.HasPrefix(encoded, "bcrypt_sha256$$2a$12$"))
 }

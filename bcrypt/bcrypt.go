@@ -23,7 +23,9 @@ type BCryptHasher struct {
 }
 
 // Encode turns a plain-text password into a hash.
-func (h *BCryptHasher) Encode(password string) (string, error) {
+//
+// Parameter salt is currently ignored.
+func (h *BCryptHasher) Encode(password string, salt string) (string, error) {
 	if h.digest != nil {
 		d := h.digest()
 		d.Write([]byte(password))

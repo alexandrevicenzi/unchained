@@ -186,9 +186,9 @@ func MakePassword(password, salt, hasher string) (string, error) {
 	case Argon2Hasher:
 		return argon2.NewArgon2Hasher().Encode(password, salt)
 	case BCryptHasher:
-		return bcrypt.NewBCryptHasher().Encode(password)
+		return bcrypt.NewBCryptHasher().Encode(password, salt)
 	case BCryptSHA256Hasher:
-		return bcrypt.NewBCryptSHA256Hasher().Encode(password)
+		return bcrypt.NewBCryptSHA256Hasher().Encode(password, salt)
 	case PBKDF2SHA1Hasher:
 		return pbkdf2.NewPBKDF2SHA1Hasher().Encode(password, salt, 0)
 	case PBKDF2SHA256Hasher:
