@@ -88,7 +88,7 @@ func (h *Argon2Hasher) Verify(password string, encoded string) (bool, error) {
 	return subtle.ConstantTimeCompare(bHash, newHash) == 1, nil
 }
 
-// Secure password hashing using the argon2 algorithm.
+// NewArgon2Hasher secures password hashing using the argon2 algorithm.
 func NewArgon2Hasher() *Argon2Hasher {
 	return &Argon2Hasher{
 		algorithm: "argon2",

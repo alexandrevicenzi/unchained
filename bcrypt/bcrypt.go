@@ -65,7 +65,7 @@ func (h *BCryptHasher) Verify(password string, encoded string) (bool, error) {
 	return err == nil, nil
 }
 
-// Secure password hashing using the bcrypt algorithm.
+// NewBCryptHasher secures password hashing using the bcrypt algorithm.
 //
 // This hasher does not first hash the password which means it is subject to
 // bcrypt's 72 bytes password truncation.
@@ -77,7 +77,7 @@ func NewBCryptHasher() *BCryptHasher {
 	}
 }
 
-// Secure password hashing using the bcrypt algorithm.
+// NewBCryptSHA256Hasher secures password hashing using the bcrypt algorithm.
 //
 // This hasher first hash the password with SHA-256.
 func NewBCryptSHA256Hasher() *BCryptHasher {

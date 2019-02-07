@@ -162,7 +162,7 @@ func CheckPassword(password, encoded string) (bool, error) {
 	return false, ErrInvalidHasher
 }
 
-// Turn a plain-text password into a hash.
+// MakePassword turns a plain-text password into a hash.
 //
 // If password is empty then return a concatenation
 // of UnusablePasswordPrefix and a random string.
@@ -197,7 +197,7 @@ func MakePassword(password, salt, hasher string) (string, error) {
 
 	if IsValidHasher(hasher) {
 		return "", ErrHasherNotImplemented
-	} else {
-		return "", ErrInvalidHasher
 	}
+
+	return "", ErrInvalidHasher
 }

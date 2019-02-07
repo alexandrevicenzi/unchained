@@ -72,6 +72,8 @@ func (h *PBKDF2Hasher) Verify(password string, encoded string) (bool, error) {
 	return hmac.Equal([]byte(newencoded), []byte(encoded)), nil
 }
 
+// NewPBKDF2SHA1Hasher secures password hashing using the PBKDF2 algorithm.
+//
 // Alternate PBKDF2 hasher which uses SHA1, the default PRF
 // recommended by PKCS #5.
 //
@@ -86,7 +88,7 @@ func NewPBKDF2SHA1Hasher() *PBKDF2Hasher {
 	}
 }
 
-// Secure password hashing using the PBKDF2 algorithm.
+// NewPBKDF2SHA256Hasher secures password hashing using the PBKDF2 algorithm.
 //
 // Configured to use PBKDF2 + HMAC + SHA256.
 // The result is a 64 byte binary string.
