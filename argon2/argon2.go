@@ -88,7 +88,16 @@ func (h *Argon2Hasher) Verify(password string, encoded string) (bool, error) {
 	}
 
 	bSalt, err := base64.RawStdEncoding.DecodeString(salt)
+
+	if err != nil {
+		return false, ErrHashComponentUnreadable
+	}
+
 	bHash, err := base64.RawStdEncoding.DecodeString(hash)
+
+	if err != nil {
+		return false, ErrHashComponentUnreadable
+	}
 
 	newHash := argon2.Key([]byte(password), bSalt, h.Time, h.Memory, h.Threads, h.Length)
 
