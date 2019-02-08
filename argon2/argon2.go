@@ -81,7 +81,10 @@ func (h *Argon2Hasher) Verify(password string, encoded string) (bool, error) {
 		return false, ErrIncompatibleVersion
 	}
 
-	_, err = fmt.Sscanf(params, "m=%d,t=%d,p=%d", &h.Memory, &h.Time, &h.Threads)
+	var time, memory uint32
+	var threads uint8
+
+	_, err = fmt.Sscanf(params, "m=%d,t=%d,p=%d", &memory, &time, &threads)
 
 	if err != nil {
 		return false, ErrHashComponentUnreadable
@@ -99,7 +102,7 @@ func (h *Argon2Hasher) Verify(password string, encoded string) (bool, error) {
 		return false, ErrHashComponentUnreadable
 	}
 
-	newHash := argon2.Key([]byte(password), bSalt, h.Time, h.Memory, h.Threads, h.Length)
+	newHash := argon2.Key([]byte(password), bSalt, time, memory, threads, uint32(len(bHash)))
 
 	return subtle.ConstantTimeCompare(bHash, newHash) == 1, nil
 }
