@@ -72,7 +72,7 @@ func main() {
         fmt.Println("Password is valid.")
     } else {
         if err == nil {
-            fmt.Println("Password is valid.")
+            fmt.Println("Password is invalid.")
         } else {
             fmt.Printf("Error decoding password: %s\n", err)
         }
