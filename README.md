@@ -93,3 +93,7 @@ MIT
 
 - [Password management in Django](https://docs.djangoproject.com/en/2.0/topics/auth/passwords/)
 - [Django Unchained](http://www.imdb.com/title/tt1853728/) :trollface:
+
+## Related Links
+
+- [Django compatible signing for Go](https://gitlab.com/pennersr/djgo/) (`django.core.signing`)
