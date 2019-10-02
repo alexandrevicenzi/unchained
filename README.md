@@ -23,12 +23,12 @@ go get github.com/alexandrevicenzi/unchained
 | BCrypt        | ✔ | ✔ | [golang.org/x/crypto/bcrypt](golang.org/x/crypto/bcrypt) |
 | BCrypt SHA256 | ✔ | ✔ | [golang.org/x/crypto/bcrypt](golang.org/x/crypto/bcrypt) |
 | Crypt         | ✘ | ✘ |  |
-| MD5           | ✘ | ✘ |  |
+| MD5           | ✔ | ✔ |  |
 | PBKDF2 SHA1   | ✔ | ✔ | [golang.org/x/crypto/pbkdf2](golang.org/x/crypto/pbkdf2) |
 | PBKDF2 SHA256 | ✔ | ✔ | [golang.org/x/crypto/pbkdf2](golang.org/x/crypto/pbkdf2) |
-| SHA1          | ✘ | ✘ |  |
-| Unsalted MD5  | ✘ | ✘ |  |
-| Unsalted SHA1 | ✘ | ✘ |  |
+| SHA1          | ✔ | ✔ |  |
+| Unsalted MD5  | ✔ | ✔ |  |
+| Unsalted SHA1 | ✔ | ✔ |  |
 
 ## Notes
 

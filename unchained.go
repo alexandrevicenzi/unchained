@@ -7,7 +7,9 @@ import (
 
 	"github.com/alexandrevicenzi/unchained/argon2"
 	"github.com/alexandrevicenzi/unchained/bcrypt"
+	"github.com/alexandrevicenzi/unchained/md5"
 	"github.com/alexandrevicenzi/unchained/pbkdf2"
+	"github.com/alexandrevicenzi/unchained/sha1"
 )
 
 // Django hasher identifiers.
@@ -102,8 +104,13 @@ func IsHasherImplemented(hasher string) bool {
 		Argon2Hasher,
 		BCryptHasher,
 		BCryptSHA256Hasher,
+		// CryptHasher,
+		MD5Hasher,
 		PBKDF2SHA1Hasher,
-		PBKDF2SHA256Hasher:
+		PBKDF2SHA256Hasher,
+		SHA1Hasher,
+		UnsaltedMD5Hasher,
+		UnsaltedSHA1Hasher:
 		return true
 	}
 
@@ -146,14 +153,6 @@ func CheckPassword(password, encoded string) (bool, error) {
 
 	hasher := IdentifyHasher(encoded)
 
-	if !IsValidHasher(hasher) {
-		return false, ErrInvalidHasher
-	}
-
-	if !IsHasherImplemented(hasher) {
-		return false, ErrHasherNotImplemented
-	}
-
 	switch hasher {
 	case Argon2Hasher:
 		return argon2.NewArgon2Hasher().Verify(password, encoded)
@@ -165,6 +164,18 @@ func CheckPassword(password, encoded string) (bool, error) {
 		return pbkdf2.NewPBKDF2SHA1Hasher().Verify(password, encoded)
 	case PBKDF2SHA256Hasher:
 		return pbkdf2.NewPBKDF2SHA256Hasher().Verify(password, encoded)
+	case MD5Hasher:
+		return md5.NewMD5PasswordHasher().Verify(password, encoded)
+	case SHA1Hasher:
+		return sha1.NewSHA1PasswordHasher().Verify(password, encoded)
+	case UnsaltedMD5Hasher:
+		return md5.NewUnsaltedMD5PasswordHasher().Verify(password, encoded)
+	case UnsaltedSHA1Hasher:
+		return sha1.NewUnsaltedSHA1PasswordHasher().Verify(password, encoded)
+	}
+
+	if IsValidHasher(hasher) {
+		return false, ErrHasherNotImplemented
 	}
 
 	return false, ErrInvalidHasher
@@ -201,6 +212,14 @@ func MakePassword(password, salt, hasher string) (string, error) {
 		return pbkdf2.NewPBKDF2SHA1Hasher().Encode(password, salt, 0)
 	case PBKDF2SHA256Hasher:
 		return pbkdf2.NewPBKDF2SHA256Hasher().Encode(password, salt, 0)
+	case MD5Hasher:
+		return md5.NewMD5PasswordHasher().Encode(password, salt)
+	case SHA1Hasher:
+		return sha1.NewSHA1PasswordHasher().Encode(password, salt)
+	case UnsaltedMD5Hasher:
+		return md5.NewUnsaltedMD5PasswordHasher().Encode(password)
+	case UnsaltedSHA1Hasher:
+		return sha1.NewUnsaltedSHA1PasswordHasher().Encode(password, salt)
 	}
 
 	if IsValidHasher(hasher) {
