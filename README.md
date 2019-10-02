@@ -7,7 +7,7 @@
 [Django Password Hashers](https://docs.djangoproject.com/en/2.2/topics/auth/passwords/) library in Go to perform user validation against legacy databases.
 You can also use it as a standard password hasher for newer Go applications.
 
-Unchained works with Go 1.6 and higher.
+Unchained works with Go 1.9 and higher.
 
 ## Install
 
