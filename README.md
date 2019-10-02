@@ -80,13 +80,9 @@ func main() {
 }
 ```
 
-## TODO
-
-- BCrypt salt support
-
 ## License
 
-MIT
+BSD
 
 ## Reference
 
