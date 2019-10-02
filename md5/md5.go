@@ -44,7 +44,7 @@ func (h *UnsaltedMD5PasswordHasher) Verify(password string, encoded string) (boo
 	return hmac.Equal([]byte(newencoded), []byte(encoded)), nil
 }
 
-// UnsaltedMD5PasswordHasher implements Salted MD5 password hasher.
+// MD5PasswordHasher implements Salted MD5 password hasher.
 type MD5PasswordHasher struct {
 	// Algorithm identifier.
 	Algorithm string

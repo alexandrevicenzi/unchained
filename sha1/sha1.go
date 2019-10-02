@@ -17,7 +17,7 @@ var (
 	ErrSaltIsEmpty            = errors.New("unchained/sha1: salt is empty")
 )
 
-// UnsaltedSHA1PasswordHasher implements Salted SHA1 password hasher.
+// SHA1PasswordHasher implements Salted SHA1 password hasher.
 type SHA1PasswordHasher struct {
 	// Algorithm identifier.
 	Algorithm string
@@ -85,7 +85,7 @@ func NewUnsaltedSHA1PasswordHasher() *SHA1PasswordHasher {
 	}
 }
 
-// NewUnsaltedSHA1PasswordHasher secures password hashing using Salted SHA1 algorithm (not recommended).
+// NewSHA1PasswordHasher secures password hashing using Salted SHA1 algorithm (not recommended).
 func NewSHA1PasswordHasher() *SHA1PasswordHasher {
 	return &SHA1PasswordHasher{
 		Algorithm: "sha1",
