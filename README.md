@@ -83,7 +83,6 @@ func main() {
 ## TODO
 
 - BCrypt salt support
-- Weak hashers support
 
 ## License
 
