@@ -14,6 +14,7 @@ var (
 	ErrHashComponentMismatch  = errors.New("unchained/md5: hashed password components mismatch")
 	ErrAlgorithmMismatch      = errors.New("unchained/md5: algorithm mismatch")
 	ErrSaltContainsDollarSing = errors.New("unchained/md5: salt contains dollar sign ($)")
+	ErrSaltIsEmpty            = errors.New("unchained/md5: salt is empty")
 )
 
 // UnsaltedMD5PasswordHasher implements a simple MD5 password hasher.
@@ -52,6 +53,10 @@ type MD5PasswordHasher struct {
 
 // Encode turns a plain-text password into a hash.
 func (h *MD5PasswordHasher) Encode(password string, salt string) (string, error) {
+	if len(salt) == 0 {
+		return "", ErrSaltIsEmpty
+	}
+
 	if strings.Contains(salt, "$") {
 		return "", ErrSaltContainsDollarSing
 	}
