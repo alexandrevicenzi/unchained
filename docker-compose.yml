@@ -3,7 +3,7 @@ services:
   app:
     build: .
     working_dir: /go/src/github.com/alexandrevicenzi/unchained
-    command: go test ./...
+    command: go test -v ./...
     ports:
      - '6060:6060'
     volumes:
