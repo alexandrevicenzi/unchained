@@ -19,13 +19,13 @@ go get github.com/alexandrevicenzi/unchained
 
 | Hasher | Encode | Decode | Dependencies |
 |:-------|:------:|:------:|:------------:|
-| Argon2        | ✔ | ✔ | [golang.org/x/crypto/argon2](golang.org/x/crypto/argon2) |
-| BCrypt        | ✔ | ✔ | [golang.org/x/crypto/bcrypt](golang.org/x/crypto/bcrypt) |
-| BCrypt SHA256 | ✔ | ✔ | [golang.org/x/crypto/bcrypt](golang.org/x/crypto/bcrypt) |
+| Argon2        | ✔ | ✔ | [golang.org/x/crypto/argon2](https://godoc.org/golang.org/x/crypto/argon2) |
+| BCrypt        | ✔ | ✔ | [golang.org/x/crypto/bcrypt](https://godoc.org/golang.org/x/crypto/bcrypt) |
+| BCrypt SHA256 | ✔ | ✔ | [golang.org/x/crypto/bcrypt](https://godoc.org/golang.org/x/crypto/bcrypt) |
 | Crypt         | ✘ | ✘ |  |
 | MD5           | ✔ | ✔ |  |
-| PBKDF2 SHA1   | ✔ | ✔ | [golang.org/x/crypto/pbkdf2](golang.org/x/crypto/pbkdf2) |
-| PBKDF2 SHA256 | ✔ | ✔ | [golang.org/x/crypto/pbkdf2](golang.org/x/crypto/pbkdf2) |
+| PBKDF2 SHA1   | ✔ | ✔ | [golang.org/x/crypto/pbkdf2](https://godoc.org/golang.org/x/crypto/pbkdf2) |
+| PBKDF2 SHA256 | ✔ | ✔ | [golang.org/x/crypto/pbkdf2](https://godoc.org/golang.org/x/crypto/pbkdf2) |
 | SHA1          | ✔ | ✔ |  |
 | Unsalted MD5  | ✔ | ✔ |  |
 | Unsalted SHA1 | ✔ | ✔ |  |
