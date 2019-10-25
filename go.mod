@@ -9,4 +9,4 @@ require (
 	golang.org/x/tools v0.0.0-20191002212750-6fe9ea94a73d // indirect
 )
 
-go 1.13
+go 1.11
