@@ -1,13 +1,12 @@
-// Package unchained provides Django password hashers in Go.
+// Package unchained provides password hashers that are compatible with Django.
 //
-// These hashers can be used to perform validation against
-// legacy databases. It can also be used as a standard for
-// newer applications.
+// These hashers can be also used to perform validation against
+// legacy and shared Django databases.
 //
 // Django provides a flexible password storage system and
 // uses PBKDF2 by default.
 //
-// The default password used in Django is a string in this format:
+// The password format/representation is the same as the one used in Django:
 //
 //    <algorithm>$<iterations>$<salt>$<hash>
 //
