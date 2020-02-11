@@ -4,12 +4,13 @@
 [![GoDoc](https://godoc.org/github.com/alexandrevicenzi/unchained?status.svg)](http://godoc.org/github.com/alexandrevicenzi/unchained)
 [![Go Report Card](https://goreportcard.com/badge/github.com/alexandrevicenzi/unchained)](https://goreportcard.com/report/github.com/alexandrevicenzi/unchained)
 
-[Django Password Hashers](https://docs.djangoproject.com/en/2.2/topics/auth/passwords/) library in Go to perform user validation against legacy databases.
-You can also use it as a standard password hasher for newer Go applications.
+Secure password hashers for Go compatible with [Django Password Hashers](https://docs.djangoproject.com/en/3.0/topics/auth/passwords/).
 
-Unchained works with Go 1.9 and higher.
+Unchained can also be used to perform password validation against legacy or shared Django databases.
 
 ## Install
+
+Requires Go 1.9 or higher.
 
 ```
 go get github.com/alexandrevicenzi/unchained
