@@ -87,7 +87,7 @@ BSD
 
 ## Reference
 
-- [Password management in Django](https://docs.djangoproject.com/en/2.2/topics/auth/passwords/)
+- [Password management in Django](https://docs.djangoproject.com/en/3.0/topics/auth/passwords/)
 - [Django Unchained](http://www.imdb.com/title/tt1853728/) :trollface:
 
 ## Related Links
