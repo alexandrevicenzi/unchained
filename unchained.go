@@ -126,7 +126,7 @@ func IsPasswordUsable(encoded string) bool {
 	return encoded != "" && !strings.HasPrefix(encoded, UnusablePasswordPrefix)
 }
 
-// CheckPassword validate if the raw password matches the encoded digest.
+// CheckPassword validates if the raw password matches the encoded digest.
 //
 // This is a shortcut that discovers the hasher used in the encoded digest
 // to perform the correct validation.
@@ -171,7 +171,7 @@ func CheckPassword(password, encoded string) (bool, error) {
 // of UnusablePasswordPrefix and a random string.
 // If salt is empty then a randon string is generated.
 // BCrypt algorithm ignores salt parameter.
-// If hasher is "default" encode using default hasher.
+// If hasher is "default", encode using default hasher.
 func MakePassword(password, salt, hasher string) (string, error) {
 	if password == "" {
 		return UnusablePasswordPrefix + GetRandomString(UnusablePasswordSuffixLength), nil
