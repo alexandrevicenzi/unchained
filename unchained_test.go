@@ -13,7 +13,7 @@ func TestMakePasswordDefault(t *testing.T) {
 		t.Fatalf("MakePassword error: %s", err)
 	}
 
-	expected := "pbkdf2_sha256$180000$1TMOT0Rohg3g$yWmK6dJrGjnpIyllslJ9vlyiXP3WOGNQ74hjEofWJu4="
+	expected := "pbkdf2_sha256$216000$1TMOT0Rohg3g$N+wIigWW4zpxnFBwXTWK1Qt8C9aduBIAayDS2ee8KxI="
 
 	if encoded != expected {
 		t.Fatalf("Encoded hash %s does not match %s.", encoded, expected)

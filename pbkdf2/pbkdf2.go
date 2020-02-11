@@ -88,7 +88,7 @@ func (h *PBKDF2Hasher) Verify(password string, encoded string) (bool, error) {
 func NewPBKDF2SHA1Hasher() *PBKDF2Hasher {
 	return &PBKDF2Hasher{
 		Algorithm:  "pbkdf2_sha1",
-		Iterations: 180000,
+		Iterations: 216000,
 		Size:       sha1.Size,
 		Digest:     sha1.New,
 	}
@@ -101,7 +101,7 @@ func NewPBKDF2SHA1Hasher() *PBKDF2Hasher {
 func NewPBKDF2SHA256Hasher() *PBKDF2Hasher {
 	return &PBKDF2Hasher{
 		Algorithm:  "pbkdf2_sha256",
-		Iterations: 180000,
+		Iterations: 216000,
 		Size:       sha256.Size,
 		Digest:     sha256.New,
 	}
