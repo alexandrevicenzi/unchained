@@ -2,7 +2,6 @@ package unchained
 
 import (
 	"errors"
-	"math/rand"
 	"strings"
 
 	"github.com/alexandrevicenzi/unchained/argon2"
@@ -35,9 +34,6 @@ const (
 	DefaultHasher = PBKDF2SHA256Hasher
 	// The default salt size used in Django.
 	DefaultSaltSize = 12
-
-	allowedChars     = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-	allowedCharsSize = len(allowedChars)
 )
 
 var (
@@ -46,18 +42,6 @@ var (
 	// ErrHasherNotImplemented is returned if the hasher is not implemented.
 	ErrHasherNotImplemented = errors.New("unchained: hasher not implemented")
 )
-
-// GetRandomString returns a securely generated random string.
-func GetRandomString(length int) string {
-	b := make([]byte, length)
-
-	for i := range b {
-		c := rand.Intn(allowedCharsSize)
-		b[i] = allowedChars[c]
-	}
-
-	return string(b)
-}
 
 // IsValidHasher returns true if the hasher
 // is supported by Django, or false otherwise.
