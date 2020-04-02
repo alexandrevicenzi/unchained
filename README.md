@@ -37,7 +37,7 @@ Crypt support is not planned because it's UNIX only.
 
 BCrypt hasher does not allow to set custom salt as in Django.
 If you encode the same password multiple times you will get different hashes.
-This limitation comes from [golang.org/x/crypto/bcrypt](golang.org/x/crypto/bcrypt) library.
+This limitation comes from [golang.org/x/crypto/bcrypt](https://godoc.org/golang.org/x/crypto/bcrypt) library.
 
 ## Examples
 
